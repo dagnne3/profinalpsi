@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido - Travel Web</title>
+    <!-- Google Fonts for styling -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            background-color: #fff;
+        }
+
+        /* Left Split - Content */
+        .login-section {
+            width: 100%;
+            padding: 40px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* Center content */
+            text-align: center;
+            /* Center text */
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin-bottom: 50px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .welcome-text h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        .welcome-text p {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+        }
+
+        .btn-secondary {
+            width: 200px;
+            /* Specific width since it's now full screen */
+            padding: 14px;
+            background-color: transparent;
+            color: #555;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f5f5f5;
+            border-color: #ccc;
+        }
+
+        /* Right Split - Image (Removed as per request, style kept to avoid breaking if referenced, but unused) */
+        .image-section {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .login-section {
+                width: 100%;
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Left Section: Content -->
+    <div class="login-section">
+        <div class="logo">TRAVEL WEB</div>
+
+        <div class="welcome-text">
+            <h1>¡Hola, {{ username }}!</h1>
+            <p>Has iniciado sesión correctamente.</p>
+        </div>
+
+        <a href="{% url 'logout' %}" class="btn-secondary">Cerrar Sesión</a>
+    </div>
+
+</body>
+
+</body>
+
+</html>

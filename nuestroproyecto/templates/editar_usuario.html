@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Usuario</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cancel {
+            display: inline-block;
+            margin-top: 10px;
+            color: #666;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Editar Usuario: {{ usuario.username }}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Render form fields manually or loop -->
+        <label>Nombre de usuario:</label>
+        {{ form.username }}
+
+        <label>Nombre:</label>
+        {{ form.nombre }}
+
+        <label>Apellido:</label>
+        {{ form.apellido }}
+
+        <label>Email:</label>
+        {{ form.email }}
+
+        <label>URL de Imagen:</label>
+        {{ form.imagen_url }}
+
+        <label>Nueva Contraseña (dejar en blanco para mantener):</label>
+        {{ form.password1 }}
+
+        <div style="margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+            {{ form.is_admin }}
+            <label for="id_is_admin" style="margin: 0; cursor: pointer;">¿Es Administrador?</label>
+        </div>
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+
+    <a href="{% url 'user_register' %}" class="cancel">Cancelar</a>
+</body>
+
+</html>

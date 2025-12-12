@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Travel Web</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --sidebar-bg: #f9f9f9;
+            --text-color: #333;
+            --muted-color: #999;
+            --accent-color: #4dae50;
+            --primary-text: #111;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            height: 100vh;
+            color: var(--text-color);
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            border-right: none;
+        }
+
+        .brand {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand span {
+            color: var(--accent-color);
+            font-size: 1.4rem;
+            line-height: 0;
+        }
+
+        .nav-menu {
+            list-style: none;
+            flex: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 15px;
+            border-radius: 12px;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .nav-link:hover,
+        .nav-link.active-link {
+            background-color: #fff;
+            color: #333;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+
+        .nav-icon {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .logout {
+            margin-top: auto;
+            color: #e74c3c;
+            padding-left: 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px 60px;
+            overflow-y: auto;
+            background-color: #fff;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .header-subtitle {
+            color: #999;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: right;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            object-fit: cover;
+        }
+
+        .user-meta h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #111;
+            margin-bottom: 2px;
+        }
+
+        .user-meta p {
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        /* Form Styling */
+        .form-container {
+            max-width: 600px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        .btn-save {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .btn-save:hover {
+            background-color: #3d8e40;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 80px;
+                padding: 20px 10px;
+            }
+
+            .brand span,
+            .nav-link span:nth-child(2),
+            .logout span:nth-child(2) {
+                display: none;
+            }
+
+            .nav-link {
+                justify-content: center;
+            }
+
+            .nav-icon {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar: Menú lateral de navegación -->
+    <div class="sidebar">
+        <div class="brand">
+            <span style="font-size: 1.5rem;">☍</span>
+            Travel web
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="{% url 'dashboard' %}" class="nav-link">
+                    <span class="nav-icon">::</span>
+                    <span>Inicio</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'tours' %}" class="nav-link">
+                    <span class="nav-icon">📅</span>
+                    <span>Toures</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'user_register' %}" class="nav-link">
+                    <span class="nav-icon">👤</span>
+                    <span>Personas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'configuracion' %}" class="nav-link">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Configuracion</span>
+                </a>
+            </li>
+        </ul>
+        <a href="{% url 'logout' %}" class="logout">
+            <span>⚙️</span>
+            <span>cerrar sesion</span>
+        </a>
+    </div>
+
+    <!-- Main Content: Área principal donde se muestra el formulario -->
+    <div class="main-content">
+
+        <!-- Header Section: Título y Perfil de Usuario -->
+        <div class="header-section">
+            <div>
+                <h1 class="header-title">Mi Perfil</h1>
+                <p class="header-subtitle">Actualiza tu información personal</p>
+            </div>
+            <!-- Profile Link -->
+            <a href="{% url 'perfil' %}" style="text-decoration:none; color:inherit;">
+                <div class="user-profile">
+                    <div class="user-meta">
+                        <h4>{{ username|default:"Admin" }}</h4>
+                        <p>Admin</p>
+                    </div>
+                    <img src="{{ usuario.imagen_url|default:'https://ui-avatars.com/api/?background=333&color=fff' }}"
+                        class="user-avatar" alt="Profile"
+                        onerror="this.src='https://ui-avatars.com/api/?name={{ username }}&background=333&color=fff'">
+                </div>
+            </a>
+        </div>
+
+        <!-- Mensajes de Feedback (Éxito/Error) -->
+        {% if messages %}
+        {% for message in messages %}
+        <div
+            style="padding: 15px; background-color: #e8f5e9; color: #2e7d32; border-radius: 8px; margin-bottom: 20px; font-weight: 500;">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <!-- Contenedor del Formulario de Edición -->
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %} <!-- Token de seguridad obligatorio en Django -->
+
+                <h3 style="margin-bottom: 20px; color: #333; font-size: 1.1rem;">Información Básica</h3>
+
+                <div class="form-group">
+                    <label>Nombre de Usuario</label>
+                    {{ form.username }}
+                </div>
+
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" name="nombre" class="form-control" value="{{ usuario.nombre|default:'' }}">
+                </div>
+
+                <div class="form-group">
+                    <label>Apellido</label>
+                    <input type="text" name="apellido" class="form-control" value="{{ usuario.apellido|default:'' }}">
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" value="{{ usuario.email|default:'' }}">
+                </div>
+
+                <div class="form-group">
+                    <label>URL de Imagen de Perfil</label>
+                    {{ form.imagen_url }}
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+
+                <h3 style="margin-bottom: 20px; color: #333; font-size: 1.1rem;">Seguridad</h3>
+
+                <div class="form-group">
+                    <label>Nueva Contraseña (Dejar en blanco para no cambiar)</label>
+                    {{ form.password1 }}
+                </div>
+
+                <button type="submit" class="btn-save">Guardar Cambios</button>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

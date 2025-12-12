@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración del Sistema - Travel Web</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --sidebar-bg: #f9f9f9;
+            --text-color: #333;
+            --card-bg: #fff;
+            --accent-color: #4dae50;
+        }
+
+    
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            height: 100vh;
+            color: var(--text-color);
+            overflow: hidden;
+            transition: background-color 0.3s;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            border-right: none;
+            transition: background-color 0.3s;
+        }
+
+        .brand {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand span {
+            color: var(--accent-color);
+            font-size: 1.4rem;
+            line-height: 0;
+        }
+
+        .nav-menu {
+            list-style: none;
+            flex: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 15px;
+            border-radius: 12px;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .nav-link.active {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] .nav-link.active {
+            background-color: #444;
+        }
+
+        .nav-link:hover:not(.active) {
+            color: var(--text-color);
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .logout {
+            margin-top: auto;
+            color: #e74c3c;
+            padding-left: 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px 60px;
+            overflow-y: auto;
+            background-color: var(--card-bg);
+            transition: background-color 0.3s;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .header-subtitle {
+            color: #999;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: right;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            object-fit: cover;
+        }
+
+        .user-meta h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 2px;
+        }
+
+        .user-meta p {
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        /* Settings Grid */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .setting-card {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.2s;
+        }
+
+        [data-theme="dark"] .setting-card {
+            border-color: #444;
+        }
+
+        .setting-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .setting-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .setting-icon {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .setting-title h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .setting-title p {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* Controls */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--accent-color);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(24px);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="brand">
+            <span style="font-size: 1.5rem;">☍</span>
+            Travel web
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="{% url 'dashboard' %}" class="nav-link">
+                    <span class="nav-icon">::</span>
+                    <span>Inicio</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'tours' %}" class="nav-link">
+                    <span class="nav-icon">📅</span>
+                    <span>Toures</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'user_register' %}" class="nav-link">
+                    <span class="nav-icon">👤</span>
+                    <span>Personas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link active">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Configuracion</span>
+                </a>
+            </li>
+        </ul>
+        <a href="{% url 'logout' %}" class="logout">
+            <span>⚙️</span>
+            <span>cerrar sesion</span>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <div class="header-section">
+            <div>
+                <h1 class="header-title">Configuración del Sistema</h1>
+                <p class="header-subtitle">Personaliza la apariencia y el comportamiento de la aplicación</p>
+            </div>
+            <!-- Profile Link -->
+            <a href="{% url 'perfil' %}" style="text-decoration:none; color:inherit;">
+                <div class="user-profile">
+                    <div class="user-meta">
+                        <h4>{{ username|default:"Admin" }}</h4>
+                        <p>Admin</p>
+                    </div>
+                    <img src="{{ usuario.imagen_url|default:'https://ui-avatars.com/api/?background=333&color=fff' }}"
+                        class="user-avatar" alt="Profile"
+                        onerror="this.src='https://ui-avatars.com/api/?name={{ username }}&background=333&color=fff'">
+                </div>
+            </a>
+        </div>
+
+        <!-- Grid de Tarjetas de Configuración -->
+        <div class="settings-grid">
+
+            <!-- Appearance -->
+
+
+            <!-- Language -->
+            <!-- Language Card: Tarjeta para seleccionar idioma -->
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">🌐</div>
+                    <div class="setting-title">
+                        <h3>Idioma</h3>
+                        <p>Selecciona el idioma del sistema</p>
+                    </div>
+                </div>
+                <select class="form-select">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+
+            <!-- Notifications -->
+            <!-- Notifications Card: Tarjeta para gestionar alertas -->
+            <div class="setting-card">
+                <div class="setting-header">
+                    <div class="setting-icon">🔔</div>
+                    <div class="setting-title">
+                        <h3>Notificaciones</h3>
+                        <p>Gestión de alertas</p>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                        <input type="checkbox" checked> Recibir alertas por correo
+                    </label>
+                </div>
+                <div>
+                    <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                        <input type="checkbox" checked> Sonidos del sistema
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Botón de Guardar (Simulado) -->
+        <div style="margin-top: 40px; text-align: right;">
+            <button onclick="saveSettings()"
+                style="background:var(--accent-color); color:white; border:none; padding:12px 25px; border-radius:8px; cursor:pointer;">Guardar
+                Preferencias</button>
+        </div>
+
+    </div>
+
+    <script>
+
+
+        function saveSettings() {
+            alert('Preferencias guardadas correctamente (Simulado)');
+        }
+    </script>
+
+</body>
+
+</html>

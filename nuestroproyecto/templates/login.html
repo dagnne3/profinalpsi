@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Travel Web</title>
+    <!-- Google Fonts for styling -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            background-color: #fff;
+        }
+
+        /* Left Split - Login Form */
+        .login-section {
+            width: 45%;
+            padding: 40px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin-bottom: 50px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: #ccc;
+            /* styling for "WEB" or similar if needed */
+        }
+
+        .welcome-text h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        .welcome-text p {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            /* Rounded input borders */
+            font-size: 0.95rem;
+            background-color: #fcfcfc;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 0.85rem;
+        }
+
+        .forgot-password {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #555;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background-color: #3e5c35;
+            /* Dark Green from mockup */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #2b4224;
+        }
+
+        .divider {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background-color: #eee;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .auth-links {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .auth-links a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Right Split - Image */
+        .image-section {
+            width: 55%;
+            padding: 20px;
+            /* Slight padding to create the border effect in mockup */
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop');
+            /* Scenic mountain/lake */
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            /* Specific rounded corners for the image container */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px;
+            color: rgb(0, 0, 0);
+        }
+
+        .image-overlay-top {
+            width: 100%;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            /* Decorative line */
+            padding-top: 20px;
+        }
+
+        .image-center-text {
+            text-align: center;
+        }
+
+        .script-font {
+            font-family: 'Brush Script MT', cursive;
+            /* Fallback for script font */
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+        }
+
+        .image-overlay-bottom {
+            width: 100%;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            padding-bottom: 20px;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Message Styling */
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .alert-error {
+            background-color: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-success {
+            background-color: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .login-section {
+                width: 100%;
+                padding: 30px;
+            }
+
+            .image-section {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Contenedor Principal del Login -->
+    <div class="login-section">
+        <div class="logo">TRAVEL WEB</div>
+
+        <div class="welcome-text">
+            <h1>Bienvenido</h1>
+            <p>Ingrese sus datos para poder acceder</p>
+        </div>
+
+        <!-- System Messages -->
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {% if 'error' in message.tags %}alert-error{% else %}alert-success{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        {% if form.errors and not messages %}
+        <div class="alert alert-error">Usuario o contraseña incorrectos.</div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %} <!-- Token de seguridad Django -->
+
+            <div class="form-group">
+                <label class="form-label">Usuario</label>
+                <input type="text" name="username" class="form-input" placeholder="Ingresa tu usuario" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Contraseña</label>
+                <input type="password" name="password" class="form-input" placeholder="Contraseña" required>
+            </div>
+
+            <div class="form-group">
+                <label class="remember-me">
+                    <input type="checkbox"> Recordar por 30 días
+                </label>
+            </div>
+
+            <button type="submit" class="btn-primary">Login</button>
+        </form>
+
+
+
+        <div class="auth-links">
+            <p>No tienes Cuenta? <a href="{% url 'registro' %}">Registrarse</a></p>
+            <p style="margin-top: 10px;">Eres administrador? <a href="{% url 'login_admin' %}">Inicia sesión aquí</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Sección Derecha: Imagen Decorativa -->
+    <div class="image-section">
+        <div class="image-container">
+            <div class="image-overlay-top">
+                Login Usuarios
+            </div>
+
+            <div class="image-center-text">
+                <span class="script-font">Viajes de aventura</span>
+                <span class="subtitle">Conquistando lo extraordinario</span>
+            </div>
+
+            <div class="image-overlay-bottom">
+                The Travel and Adventure Life
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

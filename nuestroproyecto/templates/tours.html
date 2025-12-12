@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tours - Travel Web</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --sidebar-bg: #fff;
+            --muted-color: #888;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-color);
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-bg);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #eee;
+        }
+
+        .brand {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4CAF50;
+            margin-bottom: 50px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--muted-color);
+            display: flex;
+            gap: 15px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .nav-link.active,
+        .nav-link:hover {
+            background: var(--bg-color);
+            color: #000;
+            font-weight: 500;
+        }
+
+        .content {
+            flex: 1;
+            padding: 30px 50px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 12px 20px;
+            border-radius: 8px;
+            width: 60%;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            margin-left: 10px;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .tours-grid {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tour-card {
+            width: 250px;
+            text-align: center;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 160px;
+            border-radius: 20px;
+            /* Rounded corners as per image */
+            object-fit: cover;
+            background-color: #ddd;
+            display: block;
+        }
+
+        .card-title {
+            margin-top: 10px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        /* Profile Styles */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: right;
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            object-fit: cover;
+        }
+
+        .user-meta h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #111;
+            margin-bottom: 2px;
+            margin-top: 0;
+        }
+
+        .user-meta p {
+            font-size: 0.75rem;
+            color: #999;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="brand">ooo Travel web</div>
+        <div class="nav-menu">
+            {% if is_admin %}
+            <a href="{% url 'dashboard' %}" class="nav-link"><span>::</span> Inicio (Panel)</a>
+            {% else %}
+            <a href="{% url 'home' %}" class="nav-link"><span>::</span> Inicio</a>
+            {% endif %}
+            <a href="#" class="nav-link active"><span>📅</span> Toures</a>
+            {% if is_admin %}
+            <!-- Enlaces visibles solo para Administradores -->
+            <a href="{% url 'user_register' %}" class="nav-link"><span>👤</span> Personas</a>
+            <a href="{% url 'configuracion' %}" class="nav-link"><span>⚙️</span> Configuracion</a>
+            {% endif %}
+        </div>
+        <a href="{% url 'logout' %}" class="nav-link" style="margin-top: auto; color: #e74c3c;"><span>🚪</span> Cerrar
+            Sesion</a>
+    </div>
+
+    <div class="content">
+        <div class="header">
+            <div class="search-bar"> <span style="font-size: 1.1rem; color: #888;">🔍</span> <input type="text"
+                    placeholder="Buscar Toures"></div>
+            <!-- Profile Link -->
+            <a href="{% url 'perfil' %}" style="text-decoration:none; color:inherit;">
+                <div class="user-profile">
+                    <div class="user-meta">
+                        <h4>{{ username|default:"Admin" }}</h4>
+                        <p>Admin</p>
+                    </div>
+                    <img src="https://ui-avatars.com/api/?name={{ username|default:'Admin' }}&background=333&color=fff"
+                        class="user-avatar" alt="Profile">
+                </div>
+            </a>
+        </div>
+
+        <!-- Sección 1: Tours de tipo 'Ciudad' -->
+        <h2 class="section-title">Tours ciudades</h2>
+
+        <div class="tours-grid">
+            <!-- Loop para mostrar tours filtrados por categoría 'ciudad' -->
+            {% for tour in tours_ciudades %}
+            <div class="tour-card">
+                {% if tour.imagen_url %}
+                <img src="{{ tour.imagen_url }}" class="card-img" alt="{{ tour.nombre }}">
+                {% else %}
+                <div class="card-img" style="display:flex;align-items:center;justify-content:center;background:#ccc;">No
+                    Img</div>
+                {% endif %}
+                <div class="card-title">{{ tour.nombre }}</div>
+                <div style="font-size: 0.8rem; color: #666; margin: 5px 0;">{{ tour.descripcion|truncatewords:6 }}</div>
+
+                <!-- Helper links -->
+                {% if is_admin %}
+                <div style="font-size:0.8rem; margin-top:5px;">
+                    <a href="{% url 'editar_tour' tour.pk %}" style="text-decoration:none; color:#555;">Editar</a>
+                    <a href="{% url 'eliminar_tour' tour.pk %}"
+                        style="text-decoration:none; color:red; margin-left:5px;">Eliminar</a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <!-- Add Button Card for Cities -->
+            {% if is_admin %}
+            <div class="tour-card">
+                <a href="{% url 'crear_tour' %}" style="text-decoration:none; color:inherit;">
+                    <div class="card-img"
+                        style="border: 2px dashed #ccc; background:none; display:flex; align-items:center; justify-content:center; font-size:2rem; color:#ccc;">
+                        +</div>
+                    <div class="card-title">Agregar Nuevo</div>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <br><br>
+        <!-- Sección 2: Tours de tipo 'Lugar' -->
+        <h2 class="section-title">Tours lugares</h2>
+        <div class="tours-grid">
+            {% for tour in tours_lugares %}
+            <div class="tour-card">
+                {% if tour.imagen_url %}
+                <img src="{{ tour.imagen_url }}" class="card-img" alt="{{ tour.nombre }}">
+                {% else %}
+                <div class="card-img" style="display:flex;align-items:center;justify-content:center;background:#ccc;">No
+                    Img</div>
+                {% endif %}
+                <div class="card-title">{{ tour.nombre }}</div>
+                <div style="font-size: 0.8rem; color: #666; margin: 5px 0;">{{ tour.descripcion|truncatewords:6 }}</div>
+
+                <!-- Helper links -->
+                {% if is_admin %}
+                <div style="font-size:0.8rem; margin-top:5px;">
+                    <a href="{% url 'editar_tour' tour.pk %}" style="text-decoration:none; color:#555;">Editar</a>
+                    <a href="{% url 'eliminar_tour' tour.pk %}"
+                        style="text-decoration:none; color:red; margin-left:5px;">Eliminar</a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <!-- Add Button Card for Places (Link to same create view, user chooses category) -->
+            {% if is_admin %}
+            <div class="tour-card">
+                <a href="{% url 'crear_tour' %}" style="text-decoration:none; color:inherit;">
+                    <div class="card-img"
+                        style="border: 2px dashed #ccc; background:none; display:flex; align-items:center; justify-content:center; font-size:2rem; color:#ccc;">
+                        +</div>
+                    <div class="card-title">Agregar Nuevo</div>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+</body>
+
+</html>

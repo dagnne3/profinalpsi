@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios - Travel Web</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --sidebar-bg: #f9f9f9;
+            --text-color: #333;
+            --muted-color: #999;
+            --accent-color: #4dae50;
+            --primary-text: #111;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            height: 100vh;
+            color: var(--text-color);
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            border-right: none;
+        }
+
+        .brand {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand span {
+            color: var(--accent-color);
+            font-size: 1.4rem;
+            line-height: 0;
+        }
+
+        .nav-menu {
+            list-style: none;
+            flex: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 15px;
+            border-radius: 12px;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .nav-link.active {
+            background-color: #fff;
+            color: #333;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-link:hover:not(.active) {
+            color: #555;
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .logout {
+            margin-top: auto;
+            color: #e74c3c;
+            padding-left: 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px 60px;
+            overflow-y: auto;
+            background-color: #fff;
+        }
+
+        /* Table Styles */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            background-color: #fff;
+        }
+
+        th,
+        td {
+            border-bottom: 1px solid #eee;
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f9f9f9;
+            color: #666;
+            font-weight: 500;
+        }
+
+        td {
+            color: #333;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            text-decoration: none;
+            color: white;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .btn-edit {
+            background-color: #007bff;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            border: none;
+            cursor: pointer;
+            padding: 6px 12px;
+            font-family: inherit;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .header-subtitle {
+            color: #999;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: right;
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            object-fit: cover;
+        }
+
+        .user-meta h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #111;
+            margin-bottom: 2px;
+        }
+
+        .user-meta p {
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 80px;
+                padding: 20px 10px;
+            }
+
+            .brand span,
+            .nav-link span:nth-child(2),
+            .logout span:nth-child(2) {
+                display: none;
+            }
+
+            .nav-link {
+                justify-content: center;
+            }
+
+            .nav-icon {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="brand">
+            <span style="font-size: 1.5rem;">☍</span>
+            Travel web
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="{% url 'dashboard' %}" class="nav-link">
+                    <span class="nav-icon">::</span>
+                    <span>Inicio</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'tours' %}" class="nav-link">
+                    <span class="nav-icon">📅</span>
+                    <span>Toures</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <!-- Active class here -->
+                <a href="#" class="nav-link active">
+                    <span class="nav-icon">👤</span>
+                    <span>Personas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'configuracion' %}" class="nav-link">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Configuracion</span>
+                </a>
+            </li>
+        </ul>
+        <a href="{% url 'logout' %}" class="logout">
+            <span>⚙️</span>
+            <span>cerrar sesion</span>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <div class="header-section">
+            <div>
+                <h1 class="header-title">Usuarios Registrados</h1>
+                <p class="header-subtitle">Gestiona los usuarios de la plataforma (Total: {{ total_usuarios }})</p>
+            </div>
+            <!-- Profile Link -->
+            <a href="{% url 'perfil' %}" style="text-decoration:none; color:inherit;">
+                <div class="user-profile">
+                    <div class="user-meta">
+                        <h4>{{ username|default:"Admin" }}</h4>
+                        <p>Admin</p>
+                    </div>
+                    <!-- Using session username if available in context, or generic fallback -->
+                    <img src="https://ui-avatars.com/api/?name={{ username|default:'Admin' }}&background=333&color=fff"
+                        class="user-avatar" alt="Profile">
+                </div>
+            </a>
+        </div>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div style="padding: 10px; background-color: #e8f5e9; color: #2e7d32; border-radius: 5px; margin-bottom: 20px;">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in usuarios %}
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <img src="{{ u.imagen_url|default:'https://ui-avatars.com/api/?background=random' }}"
+                                style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+                            {{ u.username }}
+                        </div>
+                    </td>
+                    <td>{{ u.nombre|default:"-" }}</td>
+                    <td>{{ u.apellido|default:"-" }}</td>
+                    <td>{{ u.email|default:"-" }}</td>
+                    <td>
+                        {% if u.is_admin %}
+                        <span
+                            style="display: inline-block; padding: 4px 12px; background-color: #4dae50; color: white; border-radius: 12px; font-size: 0.8rem; font-weight: 500;">Admin</span>
+                        {% else %}
+                        <span
+                            style="display: inline-block; padding: 4px 12px; background-color: #999; color: white; border-radius: 12px; font-size: 0.8rem; font-weight: 500;">Usuario</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'editar_usuario' u.id %}" class="btn btn-edit">Editar</a>
+                        {% if u.id != usuario_actual_id %}
+                        <form method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{ u.id }}">
+                            <button type="submit" class="btn btn-delete"
+                                onclick="return confirm('¿Eliminar?')">Eliminar</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

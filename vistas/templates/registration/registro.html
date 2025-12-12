@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="access-container">
+    <div class="access-form-section">
+        <div class="logo">TRAVELWEB</div>
+        <h2>Registrarse</h2>
+        <p>Ingrese sus datos para poder registrarse</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-primary">Registrar</button>
+        </form>
+
+        <div style="text-align: center; margin: 20px 0;">o</div>
+
+        <button class="google-btn">
+            <span>G</span> Iniciar con Google
+        </button>
+
+        <div class="auth-links">
+            <p>Ya tienes Cuenta? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </div>
+    <div class="access-image-section"
+        style="background-image: url('https://images.unsplash.com/photo-1548013146-72479768bada?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80');">
+        <!-- City/Urban image -->
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('input').forEach(input => {
+        if (input.type !== 'checkbox' && input.type !== 'submit' && input.type !== 'hidden') {
+            input.classList.add('form-control');
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Travel Web</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            background-color: #fff;
+        }
+
+        /* Left Section */
+        .register-section {
+            width: 45%;
+            padding: 20px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .title-text h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        .title-text p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background-color: #fcfcfc;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 12px;
+            background-color: #3e5c35;
+            /* Dark Green */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            transition: background 0.3s;
+        }
+
+        .btn-register:hover {
+            background-color: #2b4224;
+        }
+
+        .divider {
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background-color: #eee;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .auth-link {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        .auth-link a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Right Section */
+        .image-section {
+            width: 55%;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1596436889106-be35e843f974?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Messaging */
+        .alert {
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        @media (max-width: 900px) {
+            .register-section {
+                width: 100%;
+                padding: 30px;
+            }
+
+            .image-section {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="register-section">
+        <div class="logo">TRAVEL WEB</div>
+
+        <div class="title-text">
+            <h1>Registrarse</h1>
+            <p>Ingrese sus datos para poder registrarse</p>
+        </div>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {% if 'error' in message.tags %}alert-error{% else %}alert-success{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        {% if form.errors %}
+        <div class="alert alert-error">
+            <ul style="list-style: none; padding: 0;">
+                {% for field in form %}
+                {% for error in field.errors %}
+                <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label class="form-label">Nombre</label>
+                <input type="text" name="nombre" class="form-input" placeholder="Ingrese su nombre completo" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Apellido</label>
+                <input type="text" name="apellido" class="form-input" placeholder="Ingrese sus apellidos" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Nombre de Usuario (Login)</label>
+                <input type="text" name="username" class="form-input" placeholder="Crea un nombre de usuario" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Correo electrónico</label>
+                <input type="email" name="email" class="form-input" placeholder="Ingrese su correo" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Contraseña</label>
+                <input type="password" name="password1" class="form-input" placeholder="Contraseña" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Confirmar Contraseña</label>
+                <input type="password" name="password2" class="form-input" placeholder="Confirme su contraseña"
+                    required>
+            </div>
+
+            <button type="submit" class="btn-register">Registrar</button>
+        </form>
+
+
+
+        <div class="auth-link">
+            Ya tienes Cuenta? <a href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
+
+    <div class="image-section">
+        <div class="image-container"></div>
+    </div>
+
+</body>
+
+</html>

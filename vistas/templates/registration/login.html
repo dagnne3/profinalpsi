@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="access-container">
+    <div class="access-form-section">
+        <div class="logo">TRAVELWEB</div>
+        <h2>Bienvenido</h2>
+        <p>Ingrese sus datos para poder acceder</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <!-- Manually rendering fields to match design structure if needed, or using loop -->
+            {% for field in form %}
+            <div class="form-group">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            
+            <div class="form-group">
+                <label><input type="checkbox"> Recordar por 30 días</label>
+            </div>
+
+            <button type="submit" class="btn-primary">Login</button>
+        </form>
+
+        <div style="text-align: center; margin: 20px 0;">o</div>
+
+        <button class="google-btn">
+            <span>G</span> Iniciar con Google
+        </button>
+
+        <div class="auth-links">
+            <p>No tienes Cuenta? <a href="{% url 'registro' %}">Registrarse</a></p>
+            <p>Eres administrador? <a href="/admin/">Inicia sesion</a></p>
+        </div>
+    </div>
+    <div class="access-image-section">
+        <div class="img-overlay-text">
+            <h2>Viajes de aventura</h2>
+            <p>CONQUISTANDO LO EXTRAORDINARIO</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Add form-control class to all inputs
+    document.querySelectorAll('input').forEach(input => {
+        if(input.type !== 'checkbox' && input.type !== 'submit' && input.type !== 'hidden') {
+            input.classList.add('form-control');
+        }
+    });
+</script>
+{% endblock %}

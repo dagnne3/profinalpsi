@@ -1,0 +1,192 @@
+:root {
+    --primary-color: #3f5e33; /* Moss green from button */
+    --text-color: #333;
+    --bg-color: #fff;
+    --input-bg: #f9f9f9;
+    --input-border: #eee;
+    --font-heading: 'Outfit', sans-serif; /* Assuming a modern font */
+    --font-body: 'Inter', sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+}
+
+/* Layout */
+.access-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+.access-form-section {
+    flex: 1;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.access-image-section {
+    flex: 1.5;
+    background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); /* Nature/Mountain image */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-radius: 30px 0 0 30px; /* Curve on the left side of image */
+    margin: 10px 10px 10px 0;
+}
+
+.img-overlay-text {
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: white;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 0.9em;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 1em;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.google-btn {
+    background-color: #333;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-links {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.auth-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+/* Dashboard / CRUD */
+.dashboard-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    margin: 0 0 10px 0;
+    color: var(--primary-color);
+}
+
+.card-price {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.action-btn {
+    display: inline-block;
+    padding: 8px 15px;
+    background: #eee;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    font-size: 0.8em;
+}
+
+.action-btn.delete {
+    background: #fee;
+    color: #c00;
+}
